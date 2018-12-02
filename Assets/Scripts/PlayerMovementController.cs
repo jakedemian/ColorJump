@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour {
 	public float moveSpeedModifier;
+	public float sprintSpeedModifier;
 	public float jumpSpeed;
 
 	[Range(0f, 1f)]
@@ -30,7 +31,13 @@ public class PlayerMovementController : MonoBehaviour {
 
 	private void UpdateHorizontalMoveSpeed(){
 		float hMovement = Input.GetAxisRaw("Horizontal");
-		float calculatedMaxMoveSpeed = Time.deltaTime * moveSpeedModifier;
+
+		float currentMoveSpeedModifier = moveSpeedModifier;
+		if(Input.GetButton("Sprint")){
+			currentMoveSpeedModifier = sprintSpeedModifier;
+		}
+
+		float calculatedMaxMoveSpeed = Time.deltaTime * currentMoveSpeedModifier;
 		float thisHorizontalTranslate = 0f;
 
 		// if holding down move key
